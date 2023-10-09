@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.readPage {
+  margin: 0 auto !important;
+  text-align: center;
+}
+
+.bookItem {
+  width: 30rem;
+  margin: 5em auto;
+  padding: 3em;
+}
+
+.cardTitle {
+  color: red;
+}

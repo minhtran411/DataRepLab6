@@ -1,6 +1,7 @@
 import App from "../App";
 import Footer from "./footer"
 
+
 //Create Page
 
 function Create() {
@@ -10,7 +11,7 @@ function Create() {
       Getting navbar and header from app*/}
       
       <App></App>
-    <h1>CreatePage</h1>
+      <h3>Hello from CreatePage</h3>
     
 
     <Footer></Footer>
