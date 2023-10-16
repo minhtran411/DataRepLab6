@@ -51,3 +51,20 @@
 .cardTitle {
   color: red;
 }
+
+.createBookForm {
+  margin: 5% auto;
+  text-align: center;
+  border: 1px solid blue;
+  width: 80%;
+  padding: 5%;
+}
+
+.createBookForm label,.createBookForm h2  {
+  padding-bottom: 5%;
+  font-weight: bold;
+}
+
+.createBookForm input {
+  width: 500px;
+}

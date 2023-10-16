@@ -1,8 +1,8 @@
 import App from "../App";
-import BookItem from "./bookItem";
 import Footer from "./footer"
 import Books from "./books";
-
+import { useEffect, useState } from 'react';
+import axios from "axios";
 
 //Useful link: https://www.pluralsight.com/guides/load-and-render-json-data-into-react-components
 
@@ -11,41 +11,27 @@ import Books from "./books";
 //that component then flow the data down
 function Read() {
   //JSON book information
-  const data = [
-    {
-    "title": "Learn Git in a Month of Lunches",
-    "isbn": "1617292419",
-    "pageCount": 0,
-    "thumbnailUrl":"https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-    "status": "MEAP",
-    "authors": ["Rick Umali"],
-    "categories": []
-    },
-    {
-    "title": "MongoDB in Action, Second Edition",
-    "isbn": "1617291609",
-    "pageCount": 0,
-    "thumbnailUrl":"https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-    "status": "MEAP",
-    "authors": [
-    "Kyle Banker",
-    "Peter Bakkum",
-    "Tim Hawkins",
-    "Shaun Verch",
-    "Douglas Garrett"
-    ],
-    "categories": []
-    },
-    {
-        "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-        "isbn": "1617292036",
-        "pageCount": 0,
-        "thumbnailUrl":"https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-        "status": "MEAP",
-        "authors": ["Simon Holmes"],
-        "categories": []
-        }
-    ];
+  //handle data
+  const [name, setName] = useState('Minh');
+  //same logic with below: const data =[];
+  const [data, setData] = useState([]);
+
+  //retrieve json data by using hook useEffect, axios
+  useEffect(() => {
+    setName('Justin');
+    axios.get('https://jsonblob.com/api/jsonblob/1161593332966481920') //axios is kind of like a promise, the web wont freeze
+    .then(
+      (response) => {
+        //name of the books in json blob
+        setData(response.data.books);
+      }
+    ) //async, callback function is a fn pass using another fn, fill in what we want the callback to do in then ()
+    .catch(
+      (err) => {
+        console.log('Errors catched: '+err);
+      }
+    );
+  }, []); // the [] brackets are to stop the useeffect to be called all the time
 
   return (
     <div className="readPage">
