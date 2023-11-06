@@ -2,8 +2,9 @@ import App from "../App";
 import Footer from "./footer"
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import axios from "axios";
 
-
+//new from me
 //Create Page
 
 function Create() {
@@ -17,6 +18,16 @@ function Create() {
     console.log('Title: '+title);
     console.log('Author: '+author);
     console.log('Image: '+image);
+
+    const book = {
+      title: title,
+      image: image,
+      author: author
+    };
+
+    axios.post('http://localhost:4000/api/books', book)
+    .then()
+    .catch();
   };
 
   return (

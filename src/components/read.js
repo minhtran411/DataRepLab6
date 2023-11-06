@@ -3,7 +3,7 @@ import Footer from "./footer"
 import Books from "./books";
 import { useEffect, useState } from 'react';
 import axios from "axios";
-
+//new from me
 //Useful link: https://www.pluralsight.com/guides/load-and-render-json-data-into-react-components
 
 //Read Page
@@ -18,12 +18,13 @@ function Read() {
 
   //retrieve json data by using hook useEffect, axios
   useEffect(() => {
-    setName('Justin');
-    axios.get('https://jsonblob.com/api/jsonblob/1161593332966481920') //axios is kind of like a promise, the web wont freeze
+    //setName('Justin');
+    axios.get('http://localhost:4000/api/books') //axios is kind of like a promise, the web wont freeze
     .then(
       (response) => {
+        console.log(response.data.myBooks)
         //name of the books in json blob
-        setData(response.data.books);
+        setData(response.data.myBooks);
       }
     ) //async, callback function is a fn pass using another fn, fill in what we want the callback to do in then ()
     .catch(
