@@ -5,6 +5,9 @@ const cors = require('cors')
 const app = express();
 const port = 4000;
 
+const mongoose = require('mongoose');
+const { toBeRequired } = require('@testing-library/jest-dom/matchers');
+
 //get my update
 app.use(cors());
 
@@ -21,9 +24,41 @@ app.use(function(req, res, next) {
     
 });
 
+
+//connect mongoose
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect('mongodb+srv://admin:DataRep2023@datarep.7j0g6v6.mongodb.net/');
+
+  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
+
+const bookSchema = new mongoose.Schema({
+    title: String, 
+    image:String, 
+    author:String
+})
+
+const bookModel = mongoose.model('books',bookSchema)
+
 app.post('/api/books', (req,res) =>{
     console.log(req.body)
-    res.send('Book created')
+    
+    bookModel.create({
+        title: req.body.title,
+        image: req.body.image,
+        author:req.body.author
+    })
+    .then(
+        function() {
+            return res.redirect('/api/books')
+        }
+    )
+    .catch(
+        (e) => {res.send('data not received!')}
+    )
+
 })
 
 app.get('/', (req, res) => {
@@ -33,47 +68,10 @@ app.get('/', (req, res) => {
 
 
 //get books api
-app.get('/api/books', (req, res) => {
-    //daclare json data, research to see whether should i put this inside or outside
-    const data = [
-        {
-        "title": "Learn Git in a Month of Lunches",
-        "isbn": "1617292419",
-        "pageCount": 0,
-        "thumbnailUrl":
-        "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-        "status": "MEAP",
-        "authors": ["Rick Umali"],
-        "categories": []
-        },
-        {
-        "title": "MongoDB in Action, Second Edition",
-        "isbn": "1617291609",
-        "pageCount": 0,
-        "thumbnailUrl":
-        "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-        "status": "MEAP",
-        "authors": [
-        "Kyle Banker",
-        "Peter Bakkum",
-        "Tim Hawkins",
-        "Shaun Verch",
-        "Douglas Garrett"
-        ],
-        "categories": []
-        },
-        {
-            "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-            "isbn": "1617292036",
-            "pageCount": 0,
-            "thumbnailUrl":
-            "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-            "status": "MEAP",
-            "authors": ["Simon Holmes"],
-            "categories": []
-        }
-        ];
-    //res.json returns json data, can specify status code depends on needs
+app.get('/api/books', async (req, res) => {
+
+    let data = await bookModel.find({}); 
+    //console.log(data)
     
     res.json({ 
 
@@ -81,6 +79,13 @@ app.get('/api/books', (req, res) => {
         'MyMessage':'Hello data' 
         
         }) 
+})
+
+app.get('/api/book/:id', async (req,res) => {
+    console.log(req.params.id);
+
+    let book = await bookModel.findById({_id:req.params.id})
+    res.send(book)
 })
 
 
