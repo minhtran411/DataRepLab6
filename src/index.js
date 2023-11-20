@@ -4,11 +4,13 @@ import './index.css';
 import Home from './components/home';
 import Read from './components/read';
 import Create from './components/create';
+import Edit from './components/edit';
 import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+
 
 // Creating route for app
 
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <Create />,
+  },
+  {
+    path: "/edit/:id",
+    element: <Edit />
   }
 ]);
 

@@ -82,10 +82,20 @@ app.get('/api/books', async (req, res) => {
 })
 
 app.get('/api/book/:id', async (req,res) => {
-    console.log(req.params.id);
+    //console.log(req.params.id);
 
     let book = await bookModel.findById({_id:req.params.id})
+
     res.send(book)
+})
+
+app.put('/api/book/:id', async (req,res) => {
+    console.log("Edit: "+req.params.id);
+
+    //we have put in edit.js via axios 
+    let book = await bookModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    res.send(book)
+
 })
 
 
