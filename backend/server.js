@@ -34,14 +34,18 @@ async function main() {
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
+
+//mongoose Scheme will create a model/schema, whatever you declare in here we be kind of an obj
 const bookSchema = new mongoose.Schema({
     title: String, 
     image:String, 
     author:String
 })
 
+//Create the model from Schema
 const bookModel = mongoose.model('books',bookSchema)
 
+//create Book
 app.post('/api/books', (req,res) =>{
     console.log(req.body)
     
@@ -81,6 +85,7 @@ app.get('/api/books', async (req, res) => {
         }) 
 })
 
+//to edit book => get it by id
 app.get('/api/book/:id', async (req,res) => {
     //console.log(req.params.id);
 
@@ -89,6 +94,7 @@ app.get('/api/book/:id', async (req,res) => {
     res.send(book)
 })
 
+//change the info => onsubmit on edit.js
 app.put('/api/book/:id', async (req,res) => {
     console.log("Edit: "+req.params.id);
 
