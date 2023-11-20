@@ -34,8 +34,10 @@ export default function Edit(props) {
         })
     }, []);
 
+    //On submit button when click
     const handleSubmit = (event) => {
         event.preventDefault();
+        //create a new book obj based on information being set thru useState
         const newBook = {
             _id: id,
             title: title,
@@ -43,6 +45,7 @@ export default function Edit(props) {
             author: author
         };
 
+        //put to server.js
         axios.put('http://localhost:4000/api/book/' + id, newBook)
         .then((res) => {
             console.log(res.data);
