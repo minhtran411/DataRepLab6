@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 export default function Edit(props) {
+
     // The useParams hook returns an object of key/value pairs of
     // the dynamic params from the current URL that were matched by
     //the <Route path>.
@@ -47,8 +48,8 @@ export default function Edit(props) {
 
         //put to server.js
         axios.put('http://localhost:4000/api/book/' + id, newBook)
-        .then((res) => {
-            console.log(res.data);
+        .then(() => {
+            //trying to redirect back to read page but cannot be done
             navigate('/read');
         })
         .catch((e) => {console.log(e)});
@@ -56,6 +57,7 @@ export default function Edit(props) {
 
     return (
     <div>
+        {/* this will trigger the handleSubmit fn */}
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label>Add Book Title: </label>

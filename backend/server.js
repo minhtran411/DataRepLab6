@@ -51,13 +51,14 @@ app.post('/api/books', (req,res) =>{
     
     bookModel.create({
         title: req.body.title,
-        image: req.body.image,
+        image: req.body.image || 'https://th.bing.com/th/id/OIP.fGy18fRk-XcfLNXdTXQIHAAAAA?rs=1&pid=ImgDetMain',
         author:req.body.author
     })
     .then(
         function() {
             return res.redirect('/api/books')
         }
+        //how can i trigger redireting to read page?
     )
     .catch(
         (e) => {res.send('data not received!')}
@@ -104,6 +105,14 @@ app.put('/api/book/:id', async (req,res) => {
 
 })
 
+//delete http method, delete the book record by id
+//use async and await whenever we have to implement promise
+app.delete('/api/book/:id', async (req,res) => {
+    console.log('Delete ' + req.params.id)
+
+    let book = await bookModel.findByIdAndDelete(req.params.id);
+    res.send(book);
+})
 
 
 app.listen(port, () => {

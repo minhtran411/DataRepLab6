@@ -3,6 +3,7 @@ import Footer from "./footer"
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import { redirect } from "react-router-dom";
 
 //new from me
 //Create Page
@@ -26,7 +27,10 @@ function Create() {
     };
 
     axios.post('http://localhost:4000/api/books', book)
-    .then()
+    .then((res) => {
+      console.log(res.status);
+        return redirect("/read");
+    })
     .catch();
   };
 
@@ -54,7 +58,7 @@ function Create() {
         <br/>
         <div className="form-group">
         <label>Add Front Page URL: 
-        <input type="text" className="form-control" value={image} onChange={(e) => {setImage(e.target.value)}} />
+        <input placeholder="Leave blank if you don't have a book cover" type="text" className="form-control" value={image} onChange={(e) => {setImage(e.target.value)}} />
         </label>
         <br/>
 
