@@ -9,23 +9,22 @@ const mongoose = require('mongoose');
 const { toBeRequired } = require('@testing-library/jest-dom/matchers');
 
 //get my update
-//i don't need to use cors if i combine both client side & server side together 
-//npm run build to do production build - but if I change the code in my client side i have to do the production build again.
-
-// app.use(cors());
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
 
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//     res.header("Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
+app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept");
+    next();
     
-// });
+});
 
 
 // Serve the static files from the React app
