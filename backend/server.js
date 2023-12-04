@@ -9,20 +9,30 @@ const mongoose = require('mongoose');
 const { toBeRequired } = require('@testing-library/jest-dom/matchers');
 
 //get my update
-app.use(cors());
+//i don't need to use cors if i combine both client side & server side together 
+//npm run build to do production build - but if I change the code in my client side i have to do the production build again.
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(cors());
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//     res.header("Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
     
-});
+// });
+
+
+// Serve the static files from the React app
+//This code is to make both client side & server side being host from 1 source/domain
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 
 
 //connect mongoose
@@ -114,7 +124,14 @@ app.delete('/api/book/:id', async (req,res) => {
     res.send(book);
 })
 
+// have to be added at the bottom just over app.listen to get all the the app.get
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../build/index.html'));
+    });
 
+
+    //app listen to have server hosted
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
